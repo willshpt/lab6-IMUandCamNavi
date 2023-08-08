@@ -6,15 +6,17 @@ import json
 import time
 import board
 import busio
-from adafruit_bno08x import BNO_REPORT_ROTATION_VECTOR
+# from adafruit_bno08x import BNO_REPORT_ROTATION_VECTOR
+# from adafruit_bno08x import BNO_REPORT_GAME_ROTATION_VECTOR
+import adafruit_bno08x
 
 from adafruit_bno08x.i2c import BNO08X_I2C
 
 i2c = busio.I2C(board.SCL, board.SDA)
 bno = BNO08X_I2C(i2c)
 
-bno.enable_feature(BNO_REPORT_ROTATION_VECTOR)
-
+bno.enable_feature(adafruit_bno08x.BNO_REPORT_GAME_ROTATION_VECTOR)
+bno.enable_feature(adafruit_bno08x.BNO_REPORT_ROTATION_VECTOR)
 
 #g.imu_x = 0
 imu_y = 0
@@ -58,7 +60,7 @@ def get_imu():
     # return json.dumps(fake_str).encode('utf-8')
 
 
-    return json.dumps(bno.quaternion).encode('utf-8')
+    return json.dumps(bno.game_quaternion).encode('utf-8')
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host="127.0.0.1", port=8000)
