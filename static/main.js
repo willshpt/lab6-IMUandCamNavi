@@ -276,20 +276,20 @@ scene.add( pointLightHelper2 );
 //const pointLightHelper3 = new THREE.PointLightHelper( light3 );
 //scene.add( pointLightHelper3 );
 
-const flyControlsL = new FlyControls( camera, rendererLeft.domElement );
-flyControlsL.dragToLook = true;
-flyControlsL.movementSpeed = 5;
-flyControlsL.rollSpeed = .25;
-flyControlsL.autoForward = false;
-console.log(flyControlsL);
+// const flyControlsL = new FlyControls( camera, rendererLeft.domElement );
+// flyControlsL.dragToLook = true;
+// flyControlsL.movementSpeed = 5;
+// flyControlsL.rollSpeed = .25;
+// flyControlsL.autoForward = false;
+// console.log(flyControlsL);
 
 
-const flyControlsR = new FlyControls( camera, rendererRight.domElement );
-flyControlsR.dragToLook = true;
-flyControlsR.movementSpeed = 5;
-flyControlsR.rollSpeed = .25;
-flyControlsR.autoForward = false;
-console.log(flyControlsR);
+// const flyControlsR = new FlyControls( camera, rendererRight.domElement );
+// flyControlsR.dragToLook = true;
+// flyControlsR.movementSpeed = 5;
+// flyControlsR.rollSpeed = .25;
+// flyControlsR.autoForward = false;
+// console.log(flyControlsR);
 
 window.addEventListener( 'resize', onWindowResize );
 function onWindowResize() {
@@ -327,12 +327,12 @@ function animate() {
 
 	// call camera navigation function
 	// doMovement(camera);
-    flyControlsL.update( delta );
-	flyControlsR.update( delta );
+    // flyControlsL.update( delta );
+	// flyControlsR.update( delta );
 
 	// update sphere motion
-	cube.rotation.x += delta;
-	cube.rotation.y += delta;
+	//cube.rotation.x += delta;
+	//cube.rotation.y += delta;
 
 	// render both EffectComposers
 	rendererLeft.setRenderTarget(renderTargetLeft);
