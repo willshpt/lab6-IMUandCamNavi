@@ -147,14 +147,32 @@ const material = new THREE.MeshBasicMaterial( { color: 0x5AD684 } );
 const cube = new THREE.Mesh( geometry, material );
 scene.add( cube );
 
+
+// Euler Test
+var cx = camera.rotation.x;
+var cy = camera.rotation.y;
+var cz = camera.rotation.z;
+//var cw = camera.rotation.w;
+
+// Quaternion Test
+// var cx = camera.quaternion.x;
+// var cy = camera.quaternion.y;
+// var cz = camera.quaternion.z;
+// var cw = camera.quaternion.w;
+
 function animate() {
+
+    cy = cy + 0.01;
+    camera.rotation.set(cx,cy,cz);
+    camera.updateWorldMatrix(true);
+    console.log()
 
 	const delta = clock.getDelta();
 	stereocam.update(camera)
 	requestAnimationFrame( animate );
 
 	// call camera navigation function
-	doMovement(camera);
+	//doMovement(camera);
 
 	// update sphere motion
 	cube.rotation.x += delta;
@@ -176,62 +194,62 @@ var scaling = 0.1
 var xoff = 0
 var yoff = 0
 
-function doMovement(camera) {
+// function doMovement(camera) {
 
-	// four arrow behaviors, change camera rotation, and thus the lookat point of camera.
-	// space and shift are zoom in and out
-	// wsad can be use to change camera position
+// 	// four arrow behaviors, change camera rotation, and thus the lookat point of camera.
+// 	// space and shift are zoom in and out
+// 	// wsad can be use to change camera position
 
-	// Arrow Key Control
-	// Note: we want to update the camera yaw and pitch information here
-	// Note: when pitch is over 90 degree, you want to keep it as 90, and smaller than -90 need to be -90. 
-	let r = 0.5
+// 	// Arrow Key Control
+// 	// Note: we want to update the camera yaw and pitch information here
+// 	// Note: when pitch is over 90 degree, you want to keep it as 90, and smaller than -90 need to be -90. 
+// 	let r = 0.5
     
-    if (k['ArrowUp'] == true) yoff -= r
-    if (k['ArrowDown'] == true) yoff += r
+//     if (k['ArrowUp'] == true) yoff -= r
+//     if (k['ArrowDown'] == true) yoff += r
 
-    if (k['ArrowLeft'] == true) xoff += r
-    if (k['ArrowRight'] == true) xoff -= r
+//     if (k['ArrowLeft'] == true) xoff += r
+//     if (k['ArrowRight'] == true) xoff -= r
 
-    xoff *= scaling
-    yoff *= scaling
+//     xoff *= scaling
+//     yoff *= scaling
 
-    s.yaw += xoff
-    s.pitch += yoff
+//     s.yaw += xoff
+//     s.pitch += yoff
 
-    if (s.pitch > Math.PI / 2 - 0.01) s.pitch = Math.PI / 2 - 0.01
-    if (s.pitch < -(Math.PI / 2) + 0.01) s.pitch = -Math.PI / 2 + 0.01
+//     if (s.pitch > Math.PI / 2 - 0.01) s.pitch = Math.PI / 2 - 0.01
+//     if (s.pitch < -(Math.PI / 2) + 0.01) s.pitch = -Math.PI / 2 + 0.01
 
-	// maybe keep here.
-    c.lookat.x = -Math.cos(s.pitch) * Math.cos(s.yaw)
-    c.lookat.z = -Math.cos(s.pitch) * Math.sin(-s.yaw)
-    c.lookat.y = -Math.sin(s.pitch)
+// 	// maybe keep here.
+//     c.lookat.x = -Math.cos(s.pitch) * Math.cos(s.yaw)
+//     c.lookat.z = -Math.cos(s.pitch) * Math.sin(-s.yaw)
+//     c.lookat.y = -Math.sin(s.pitch)
 
-    let mScaling = 0.1
+//     let mScaling = 0.1
 
-    c.lookat.normalize()
+//     c.lookat.normalize()
 
-	// Space and Shift Control
-	// zoom in and out, change z of camera pos.
+// 	// Space and Shift Control
+// 	// zoom in and out, change z of camera pos.
 
-	if (k[' '] == true) c.pos.z-=mScaling
-	if (k['Shift'] == true) c.pos.z+=mScaling
+// 	if (k[' '] == true) c.pos.z-=mScaling
+// 	if (k['Shift'] == true) c.pos.z+=mScaling
 
-	// WSAD Control
-	// change camera position, change x and y of camera pos.
+// 	// WSAD Control
+// 	// change camera position, change x and y of camera pos.
 
-    if (k['w'] == true) c.pos.y-=mScaling
-    if (k['s'] == true) c.pos.y+=mScaling
+//     if (k['w'] == true) c.pos.y-=mScaling
+//     if (k['s'] == true) c.pos.y+=mScaling
 
-    if (k['a'] == true) c.pos.x-=mScaling
-    if (k['d'] == true) c.pos.x+=mScaling
+//     if (k['a'] == true) c.pos.x-=mScaling
+//     if (k['d'] == true) c.pos.x+=mScaling
 
-	// update camera position and lookat point
-	// Note: the lookat point need to combine c.lookat and c.pos.
+// 	// update camera position and lookat point
+// 	// Note: the lookat point need to combine c.lookat and c.pos.
 
-    camera.position.copy(c.pos)
-    let templookat = new THREE.Vector3().addVectors(c.lookat, c.pos)
-    camera.lookAt(templookat)
-}
+//     camera.position.copy(c.pos)
+//     let templookat = new THREE.Vector3().addVectors(c.lookat, c.pos)
+//     camera.lookAt(templookat)
+// }
 
 animate();
