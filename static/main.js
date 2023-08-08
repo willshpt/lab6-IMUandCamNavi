@@ -150,6 +150,9 @@ window.setInterval(() => {
 
 // vignette shader pass setup
 var vignettePass = new ShaderPass(InstagramFilter);
+vignettePass.uniforms[ "vignette" ].value = 0.9;
+vignettePass.uniforms[ "exposure" ].value = 0.9;
+vignettePass.uniforms[ "color" ].value = new THREE.Color(0.66, 1.2, 0.66);
 composerLeft.addPass( vignettePass );
 composerRight.addPass( vignettePass );
 
