@@ -30,7 +30,7 @@ CORS(app)
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello, World!</p> <a href=\"index.html\">Click here for graphics</a>"
+    return "<p>Hello, World!</p> <a href=\"index.html\">Click here for graphics</a> <a href=\"getimu.html\">Click here for IMU</a>"
 
 
 @app.route("/static/<path:path>")
