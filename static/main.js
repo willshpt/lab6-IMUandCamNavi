@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { FlyControls } from 'three/addons/controls/FlyControls.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { InstagramFilter } from './vignetteShader.js';
@@ -15,12 +16,15 @@ var cw ;
 // create a scene 
 const scene = new THREE.Scene();
 
+let SCREEN_HEIGHT = window.innerHeight;
+let SCREEN_WIDTH = window.innerWidth;
+
 // stereo camera setup here
 var stereocam = new THREE.StereoCamera()
 stereocam.eyeSep = 1.5
 
 // scene camera update
-const camera = new THREE.PerspectiveCamera( 75, window.innerWidth /2/ window.innerHeight, 0.1, 1000 );
+const camera = new THREE.PerspectiveCamera( 75, SCREEN_WIDTH /2/ SCREEN_HEIGHT, 0.1, 1000 );
 camera.position.set(0, 0, 7);
 camera.lookAt(0, 0, 0);
 stereocam.update(camera)
@@ -33,25 +37,25 @@ var half_canvas_seperation = 5;
 
 // left
 const rendererLeft = new THREE.WebGLRenderer();
-rendererLeft.setSize( window.innerWidth/2-half_canvas_seperation, window.innerHeight );
+rendererLeft.setSize( SCREEN_WIDTH/2-half_canvas_seperation, SCREEN_HEIGHT );
 rendererLeft.domElement.style.position = 'absolute';
 rendererLeft.domElement.style.left = (0) + 'px';
-rendererLeft.domElement.style.right = (window.innerWidth/2-half_canvas_seperation) + 'px';
+rendererLeft.domElement.style.right = (SCREEN_WIDTH/2-half_canvas_seperation) + 'px';
 rendererLeft.domElement.style.top = '0px';
 document.body.appendChild( rendererLeft.domElement );
 
 // right 
 const rendererRight = new THREE.WebGLRenderer();
-rendererRight.setSize(window.innerWidth/2-half_canvas_seperation, window.innerHeight);
+rendererRight.setSize(SCREEN_WIDTH/2-half_canvas_seperation, SCREEN_HEIGHT);
 rendererRight.domElement.style.position = 'absolute';
-rendererRight.domElement.style.left = (window.innerWidth/2+half_canvas_seperation) + 'px';
+rendererRight.domElement.style.left = (SCREEN_WIDTH/2+half_canvas_seperation) + 'px';
 rendererRight.domElement.style.top = '0px';
 document.body.appendChild(rendererRight.domElement);
 
 
 // EffectComposer setup
-var renderTargetLeft = new THREE.WebGLRenderTarget(window.innerWidth/2,window.innerHeight);
-var renderTargetRight = new THREE.WebGLRenderTarget(window.innerWidth/2,window.innerHeight);
+var renderTargetLeft = new THREE.WebGLRenderTarget(SCREEN_WIDTH/2,SCREEN_HEIGHT);
+var renderTargetRight = new THREE.WebGLRenderTarget(SCREEN_WIDTH/2,SCREEN_HEIGHT);
 
 const renderPassL = new RenderPass( scene, stereocam.cameraL );
 const renderPassR = new RenderPass( scene, stereocam.cameraR );
@@ -155,10 +159,10 @@ composerLeft.addPass( lensDistortion );
 composerRight.addPass( lensDistortion );
 
 // create a cube 
-const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-const material = new THREE.MeshBasicMaterial( { color: 0x5AD684 } );
-const cube = new THREE.Mesh( geometry, material );
-scene.add( cube );
+//const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+//const material = new THREE.MeshBasicMaterial( { color: 0x5AD684 } );
+//const cube = new THREE.Mesh( geometry, material );
+//scene.add( cube );
 
 
 // Euler Test
@@ -168,6 +172,140 @@ scene.add( cube );
 //var cw = camera.rotation.w;
 
 
+// BEGINNING OF CODE FROM LAB 1
+//################################################
+//const effect = new StereoEffect( renderer );
+//effect.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
+// the four spheres
+const s1_geometry = new THREE.SphereGeometry( 1, 32, 16 );
+const s1_material = new THREE.MeshStandardMaterial( { color: 0x00ff00 } );
+const sphere1 = new THREE.Mesh( s1_geometry, s1_material );
+sphere1.castShadow = true;
+sphere1.receiveShadow = true;
+scene.add( sphere1 );
+
+const sphere2 = sphere1.clone();
+sphere2.material = new THREE.MeshStandardMaterial( { color: 0xff0000 } );
+scene.add( sphere2 );
+
+const sphere3 = sphere1.clone();
+sphere3.material = new THREE.MeshStandardMaterial( { color: 0xffa500 } );
+scene.add( sphere3 );
+
+const sphere4 = sphere1.clone();
+sphere4.material = new THREE.MeshStandardMaterial( { color: 0x0000ff } );
+scene.add( sphere4 );
+
+sphere1.position.x = 2;
+sphere2.position.x = -2;
+sphere3.position.z = 2;
+sphere4.position.z = -2;
+
+//ground plane
+const geometry = new THREE.PlaneGeometry( 20, 20 );
+const material = new THREE.MeshStandardMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+const plane = new THREE.Mesh( geometry, material );
+plane.castShadow = false;
+plane.receiveShadow = true;
+scene.add( plane );
+plane.rotation.x = Math.PI / 2;
+plane.position.y = -1;
+
+const loader = new GLTFLoader();
+
+loader.load( './Jellyfish.glb', function ( gltf ) {
+
+	scene.add( gltf.scene );
+	gltf.scene.position.setX(-3);
+	gltf.scene.position.setY(3);
+	gltf.scene.position.setZ(0);
+	gltf.scene.rotation.set(1,4,0);
+	gltf.scene.scale.setScalar(.05);
+	gltf.scene.traverse( function( node ) {
+
+        if ( node.isMesh ) { node.castShadow = true; }
+
+    } );
+
+}, undefined, function ( error ) {
+	console.error( error );
+} );
+loader.load( './Piano.glb', function ( gltf ) {
+
+	scene.add( gltf.scene );
+	gltf.scene.position.setX(5);
+	gltf.scene.position.setY(0);
+	gltf.scene.position.setZ(0);
+	gltf.scene.rotation.set(0,4,0);
+	gltf.scene.traverse( function( node ) {
+
+        if ( node.isMesh ) { node.castShadow = true; }
+
+    } );
+
+}, undefined, function ( error ) {
+	console.error( error );
+} );
+
+
+//Create a PointLight and turn on shadows for the light
+//######################################################
+const light1 = new THREE.PointLight( 0xffffff, 1, 100 );
+light1.position.set( -2, 6, 4 );
+light1.castShadow = true; // default false
+scene.add( light1 )
+
+const pointLightHelper1 = new THREE.PointLightHelper( light1 );
+scene.add( pointLightHelper1 );
+
+
+const light2 = new THREE.PointLight( 0xffffff, 1, 100 );
+light2.position.set( 2, 3, 4 );
+light2.castShadow = true; // default false
+scene.add( light2 )
+
+const pointLightHelper2 = new THREE.PointLightHelper( light2 );
+scene.add( pointLightHelper2 );
+
+//const light3 = new THREE.PointLight( 0xffffff, 1, 100 );
+//light3.position.set( 0, 3, -4 );
+//light3.castShadow = true; // default false
+//scene.add( light3 )
+
+//const pointLightHelper3 = new THREE.PointLightHelper( light3 );
+//scene.add( pointLightHelper3 );
+
+const flyControlsL = new FlyControls( camera, rendererLeft.domElement );
+flyControlsL.dragToLook = true;
+flyControlsL.movementSpeed = 5;
+flyControlsL.rollSpeed = .25;
+flyControlsL.autoForward = false;
+console.log(flyControlsL);
+
+
+const flyControlsR = new FlyControls( camera, rendererRight.domElement );
+flyControlsR.dragToLook = true;
+flyControlsR.movementSpeed = 5;
+flyControlsR.rollSpeed = .25;
+flyControlsR.autoForward = false;
+console.log(flyControlsR);
+
+window.addEventListener( 'resize', onWindowResize );
+function onWindowResize() {
+
+	SCREEN_HEIGHT = window.innerHeight;
+	SCREEN_WIDTH = window.innerWidth;
+
+	camera.aspect = SCREEN_WIDTH /2/ SCREEN_HEIGHT;
+	camera.updateProjectionMatrix();
+
+	rendererLeft.setSize( (SCREEN_WIDTH/2 - half_canvas_seperation), SCREEN_HEIGHT );
+	document.body.appendChild( rendererLeft.domElement );
+
+	rendererRight.setSize((SCREEN_WIDTH/2 - half_canvas_seperation), SCREEN_HEIGHT);
+	rendererRight.domElement.style.left = (SCREEN_WIDTH/2 + half_canvas_seperation) + 'px';
+
+}
 
 function animate() {
 
@@ -188,6 +326,8 @@ function animate() {
 
 	// call camera navigation function
 	// doMovement(camera);
+    flyControlsL.update( delta );
+	flyControlsR.update( delta );
 
 	// update sphere motion
 	cube.rotation.x += delta;
