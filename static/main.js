@@ -150,6 +150,9 @@ window.setInterval(() => {
 
 // vignette shader pass setup
 var vignettePass = new ShaderPass(InstagramFilter);
+vignettePass.uniforms[ "vignette" ].value = 0.9;
+vignettePass.uniforms[ "exposure" ].value = 0.9;
+vignettePass.uniforms[ "color" ].value = new THREE.Color(0.66, 1.2, 0.66);
 composerLeft.addPass( vignettePass );
 composerRight.addPass( vignettePass );
 
@@ -276,20 +279,20 @@ scene.add( pointLightHelper2 );
 //const pointLightHelper3 = new THREE.PointLightHelper( light3 );
 //scene.add( pointLightHelper3 );
 
-const flyControlsL = new FlyControls( camera, rendererLeft.domElement );
-flyControlsL.dragToLook = true;
-flyControlsL.movementSpeed = 5;
-flyControlsL.rollSpeed = .25;
-flyControlsL.autoForward = false;
-console.log(flyControlsL);
+// const flyControlsL = new FlyControls( camera, rendererLeft.domElement );
+// flyControlsL.dragToLook = true;
+// flyControlsL.movementSpeed = 5;
+// flyControlsL.rollSpeed = .25;
+// flyControlsL.autoForward = false;
+// console.log(flyControlsL);
 
 
-const flyControlsR = new FlyControls( camera, rendererRight.domElement );
-flyControlsR.dragToLook = true;
-flyControlsR.movementSpeed = 5;
-flyControlsR.rollSpeed = .25;
-flyControlsR.autoForward = false;
-console.log(flyControlsR);
+// const flyControlsR = new FlyControls( camera, rendererRight.domElement );
+// flyControlsR.dragToLook = true;
+// flyControlsR.movementSpeed = 5;
+// flyControlsR.rollSpeed = .25;
+// flyControlsR.autoForward = false;
+// console.log(flyControlsR);
 
 window.addEventListener( 'resize', onWindowResize );
 function onWindowResize() {
