@@ -112,25 +112,25 @@ window.addEventListener(
     false
 )
 
-// window.setInterval(() => {
-//     fetch("http://127.0.0.1:5000/getimu")
-//       .then((response) => {
-//             if (response.status != 500) {
-//                 response.json().then((t) => {
+window.setInterval(() => {
+    fetch("http://127.0.0.1:8000/getimu")
+      .then((response) => {
+            if (response.status != 500) {
+                response.json().then((t) => {
 
-// 					// YOUR CODE:
+					// YOUR CODE:
 
-// 					// set the camera quaternion.
-//                     camera.rotation.set[t[0],t[1],t[2]]
-//                     camera.quaternion.set(t[0], t[1], t[2], t[3])
-//                     camera.updateMatrixWorld(true)
+					// set the camera quaternion.
+                    // camera.rotation.set[t[0],t[1],t[2]]
+                    camera.quaternion.set(t[0], t[1], t[2], t[3])
+                    camera.updateMatrixWorld(true)
                     
-//                 })
-//             }
-//         }
-//         )
+                })
+            }
+        }
+        )
       
-//     }, 50)
+    }, 50)
 
 // vignette shader pass setup
 var vignettePass = new ShaderPass(InstagramFilter);
@@ -157,10 +157,10 @@ scene.add( cube );
 //var cw = camera.rotation.w;
 
 // Quaternion Test
-var cx = camera.quaternion.x;
-var cy = camera.quaternion.y;
-var cz = camera.quaternion.z;
-var cw = camera.quaternion.w;
+// var cx = camera.quaternion.x;
+// var cy = camera.quaternion.y;
+// var cz = camera.quaternion.z;
+// var cw = camera.quaternion.w;
 
 function animate() {
 
