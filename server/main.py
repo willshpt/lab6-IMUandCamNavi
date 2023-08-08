@@ -30,7 +30,7 @@ CORS(app)
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello, World!</p> <a href=\"index.html\">Click here for graphics</a> <a href=\"getimu.html\">Click here for IMU</a>"
+    return "<p>Hello, World!</p> <a href=\"index.html\">Click here for graphics</a> <a href=\"getimu\">Click here for IMU</a>"
 
 
 @app.route("/static/<path:path>")
@@ -58,7 +58,7 @@ def get_imu():
     # return json.dumps(fake_str).encode('utf-8')
 
 
-    return json.dumps(bno.quaternion).encode('utf-8')
+    return json.dumps(bno.game_quaternion).encode('utf-8')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)
