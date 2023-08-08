@@ -121,7 +121,9 @@ window.addEventListener(
 // 					// YOUR CODE:
 
 // 					// set the camera quaternion.
+//                     camera.rotation.set[t[0],t[1],t[2]]
 //                     camera.quaternion.set(t[0], t[1], t[2], t[3])
+//                     camera.updateMatrixWorld(true)
                     
 //                 })
 //             }
@@ -149,23 +151,29 @@ scene.add( cube );
 
 
 // Euler Test
-var cx = camera.rotation.x;
-var cy = camera.rotation.y;
-var cz = camera.rotation.z;
+// var cx = camera.rotation.x;
+// var cy = camera.rotation.y;
+// var cz = camera.rotation.z;
 //var cw = camera.rotation.w;
 
 // Quaternion Test
-// var cx = camera.quaternion.x;
-// var cy = camera.quaternion.y;
-// var cz = camera.quaternion.z;
-// var cw = camera.quaternion.w;
+var cx = camera.quaternion.x;
+var cy = camera.quaternion.y;
+var cz = camera.quaternion.z;
+var cw = camera.quaternion.w;
 
 function animate() {
 
-    cy = cy + 0.01;
-    camera.rotation.set(cx,cy,cz);
+    //cy = cy + 0.1;
+   //camera.rotation.set(cx,cy,cz);
+
+    // camera.quaternion.set(cx,cy,cz,cw);
+	// camera.quaternion.normalize();
+
+
     camera.updateWorldMatrix(true);
-    console.log()
+    console.log(camera.rotation)
+    console.log(camera.quaternion)
 
 	const delta = clock.getDelta();
 	stereocam.update(camera)
