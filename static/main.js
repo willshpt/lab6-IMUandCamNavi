@@ -172,7 +172,7 @@ window.setInterval(() => {
             }
             )
           
-        }, 50)
+        }, 1000)
 
 // vignette shader pass setup
 var vignettePass = new ShaderPass(InstagramFilter);
