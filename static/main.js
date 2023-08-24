@@ -124,7 +124,7 @@ window.addEventListener(
 )
 
 window.setInterval(() => {
-    fetch("http://127.0.0.1:8000/getimu")
+    fetch("http://127.0.0.1:8001/getimu")
       .then((response) => {
             if (response.status != 500) {
                 response.json().then((t) => {
@@ -149,7 +149,7 @@ window.setInterval(() => {
     }, 50)
 
     window.setInterval(() => {
-        fetch("http://127.0.0.1:8000/gesture")
+        fetch("http://127.0.0.1:8001/gesture")
           .then((response) => {
                 if (response.status != 500) {
                     response.json().then((t) => {
