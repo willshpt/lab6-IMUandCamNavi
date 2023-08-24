@@ -148,6 +148,32 @@ window.setInterval(() => {
       
     }, 50)
 
+    window.setInterval(() => {
+        fetch("http://127.0.0.1:8000/gesture")
+          .then((response) => {
+                if (response.status != 500) {
+                    response.json().then((t) => {
+                        if(t.localeCompare("Thumb_Up") == 0) {
+                            sphere4.material.color.set({ color: 0xfc03c6 })
+                        }
+                        else{
+                            sphere4.material.color.set({ color: 0x0000ff })
+                        }
+    
+                        // YOUR CODE:
+    
+                        // set the camera quaternion.
+                        // camera.rotation.set[t[0],t[1],t[2]]
+                        // camera.quaternion.set(cx,cy,cz,cw)
+                        // camera.updateMatrixWorld(true)
+                        
+                    })
+                }
+            }
+            )
+          
+        }, 50)
+
 // vignette shader pass setup
 var vignettePass = new ShaderPass(InstagramFilter);
 vignettePass.uniforms[ "vignette" ].value = 0.9;
@@ -195,6 +221,8 @@ scene.add( sphere2 );
 const sphere3 = sphere1.clone();
 sphere3.material = new THREE.MeshStandardMaterial( { color: 0xffa500 } );
 scene.add( sphere3 );
+
+sphere4color = new THREE.Color(0x0000ff);
 
 const sphere4 = sphere1.clone();
 sphere4.material = new THREE.MeshStandardMaterial( { color: 0x0000ff } );
