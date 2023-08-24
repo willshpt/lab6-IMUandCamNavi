@@ -15,4 +15,3 @@ def get_results(image_file_name):
     names=top_gesture.category_name
 
   return(names)
-

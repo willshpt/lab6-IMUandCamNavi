@@ -66,6 +66,11 @@ def get_imu():
 
 @app.route("/gesture")
 def gesture():
+    url = "http://192.168.4.1:80/capture?"
+    urllib.request.urlretrieve(url, "cap.jpg")
+    img = Image.open("cap.jpg")
+    name = get_results('/home/cs396/Documents/lab6-IMUandCamNavi/server/cap.jpg')
+    return json.dumps(name).encode('utf-8')
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8000)
