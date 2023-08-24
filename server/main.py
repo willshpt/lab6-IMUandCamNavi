@@ -62,5 +62,8 @@ def get_imu():
 
     return json.dumps(bno.game_quaternion).encode('utf-8')
 
+@app.route("/gesture")
+def gesture():
+
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8000)
