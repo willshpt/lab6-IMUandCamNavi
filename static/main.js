@@ -222,7 +222,7 @@ const sphere3 = sphere1.clone();
 sphere3.material = new THREE.MeshStandardMaterial( { color: 0xffa500 } );
 scene.add( sphere3 );
 
-sphere4color = new THREE.Color(0x0000ff);
+//sphere4color = new THREE.Color(0x0000ff);
 
 const sphere4 = sphere1.clone();
 sphere4.material = new THREE.MeshStandardMaterial( { color: 0x0000ff } );
