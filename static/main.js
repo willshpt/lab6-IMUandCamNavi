@@ -307,12 +307,12 @@ scene.add( pointLightHelper2 );
 //const pointLightHelper3 = new THREE.PointLightHelper( light3 );
 //scene.add( pointLightHelper3 );
 
-// const flyControlsL = new FlyControls( camera, rendererLeft.domElement );
-// flyControlsL.dragToLook = true;
-// flyControlsL.movementSpeed = 5;
-// flyControlsL.rollSpeed = .25;
-// flyControlsL.autoForward = false;
-// console.log(flyControlsL);
+const flyControlsL = new FlyControls( camera, rendererLeft.domElement );
+flyControlsL.dragToLook = true;
+flyControlsL.movementSpeed = 5;
+flyControlsL.rollSpeed = .25;
+flyControlsL.autoForward = false;
+console.log(flyControlsL);
 
 
 // const flyControlsR = new FlyControls( camera, rendererRight.domElement );
@@ -358,7 +358,7 @@ function animate() {
 
 	// call camera navigation function
 	// doMovement(camera);
-    // flyControlsL.update( delta );
+    //flyControlsL.update( delta );
 	// flyControlsR.update( delta );
 
 	// update sphere motion
