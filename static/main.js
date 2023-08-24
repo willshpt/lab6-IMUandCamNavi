@@ -154,10 +154,10 @@ window.setInterval(() => {
                 if (response.status != 500) {
                     response.json().then((t) => {
                         if(t.localeCompare("Thumb_Up") == 0) {
-                            sphere4.material.color.set({ color: 0xfc03c6 })
+                            sphere1.material.color.set({ color: 0xfc03c6 })
                         }
                         else{
-                            sphere4.material.color.set({ color: 0x0000ff })
+                            sphere1.material.color.set({ color: 0x0000ff })
                         }
     
                         // YOUR CODE:
